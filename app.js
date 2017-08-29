@@ -69,19 +69,37 @@ $(document).ready(function() {
        console.log(childSnapshot.val().frequency);
        
     //Calculate times
-    // var timeConverted = moment(childSnapshot.val().time, "H:mm").format("H:mm");
-    var timeConverted = moment(childSnapshot.val().time, "H:mm").subtract(1, "years");
-    console.log(timeConverted);
+    var time = childSnapshot.val().time.trim();
+    // console.log(time);
+    // var timeConverted = moment(time.toString()).format("H:mm");
+    // var timeConverted = moment(time, "H:mm");
+    var timeConverted = moment(time, "H:mm");
+    // var timeConverted = moment(childSnapshot.val().time, "H:mm").subtract(1, "years");
+    // console.log(timeConverted);
+
+    // alert(moment(timeConverted,"H:mm").isValid());
 
     // timeConverted = moment(timeConverted).subtract(1, "years");
     // console.log(timeConverted);
 
-    var currentTime = moment().format("H:mm");
-    console.log(currentTime);    
+    // var currentTime = moment().format("X");
+    // console.log(currentTime); 
+    // // alert(moment(currentTime,"H:mm").isValid());
+    // // var diffTime = currentTime.diff(timeConverted, "seconds");
+    // // console.log(diffTime);
+    // var a = "03:50";
+    // var convertedA = moment(a, "H:mm");
+    // // var diffTime = moment().diff(moment(convertedA), "minutes");
 
-    var diffTime = moment(currentTime).diff(moment(timeConverted), "minutes");
+    var diffTime = moment().diff(moment(timeConverted), "minutes");
+    console.log(diffTime);
+    
+    var diffTime = moment().diff(moment(timeConverted), "minutes");
+    // // var subTime = moment(currentTime, "H:mm").subtract(timeConverted, "minutes");
     console.log(diffTime);
 
+    // var diffTime = moment().diff(childSnapshot.val().time);
+    // console.log(diffTime);
 
     // full list of trains
        $("#trainList").append("<tr><td> " + childSnapshot.val().trainName +
