@@ -68,45 +68,31 @@ $(document).ready(function() {
        console.log(childSnapshot.val().time);
        console.log(childSnapshot.val().frequency);
        
-    //Calculate times
+    //Train first time
     var time = childSnapshot.val().time.trim();
-    // console.log(time);
-    // var timeConverted = moment(time.toString()).format("H:mm");
-    // var timeConverted = moment(time, "H:mm");
     var timeConverted = moment(time, "H:mm");
-    // var timeConverted = moment(childSnapshot.val().time, "H:mm").subtract(1, "years");
-    // console.log(timeConverted);
-
-    // alert(moment(timeConverted,"H:mm").isValid());
-
-    // timeConverted = moment(timeConverted).subtract(1, "years");
-    // console.log(timeConverted);
-
-    // var currentTime = moment().format("X");
-    // console.log(currentTime); 
-    // // alert(moment(currentTime,"H:mm").isValid());
-    // // var diffTime = currentTime.diff(timeConverted, "seconds");
-    // // console.log(diffTime);
-    // var a = "03:50";
-    // var convertedA = moment(a, "H:mm");
-    // // var diffTime = moment().diff(moment(convertedA), "minutes");
-
+    
+    //Difference between first train and now
     var diffTime = moment().diff(moment(timeConverted), "minutes");
     console.log(diffTime);
     
-    var diffTime = moment().diff(moment(timeConverted), "minutes");
-    // // var subTime = moment(currentTime, "H:mm").subtract(timeConverted, "minutes");
-    console.log(diffTime);
-
-    // var diffTime = moment().diff(childSnapshot.val().time);
-    // console.log(diffTime);
+    //Train frequency
+    var frequency = childSnapshot.val().frequency.trim();
+    //Remainder of the difference between now and first train divided by frequency
+	var timeRemainder = diffTime % frequency;
+    console.log(timeRemainder);
+    //Minutes until next train
+    var minNextTrain = frequency - timeRemainder;
+    console.log(minNextTrain);
+    //Next train time
+   	var nextTrain = moment().add(minNextTrain, "minutes");
 
     // full list of trains
        $("#trainList").append("<tr><td> " + childSnapshot.val().trainName +
          " </td><td> " + childSnapshot.val().destination +
          " </td><td> " + childSnapshot.val().frequency +
-         " </td><td> " + "placeholder next arrival" +
-         " </td><td> " + "placeholder minutes away" + " </td></tr>");
+         " </td><td> " + nextTrain.format("h:mm A") +
+         " </td><td> " + minNextTrain + " </td></tr>");
 
      // Handle the errors
      }, function(errorObject) {
