@@ -35,7 +35,6 @@ $(document).ready(function() {
     // Capture Button Click
     $("#submit").on("click", function(event) {
       event.preventDefault();
-      console.log("can you see me");
       
       trainName = $("#train_input").val().trim();
       destination = $("#destination_input").val().trim();
@@ -62,28 +61,19 @@ $(document).ready(function() {
     // Update Train Schedule
     database.ref().on("child_added", function(childSnapshot) {
 
-    //   Log everything that's coming out of snapshot
-       console.log(childSnapshot.val().trainName);
-       console.log(childSnapshot.val().destination);
-       console.log(childSnapshot.val().time);
-       console.log(childSnapshot.val().frequency);
-       
     //Train first time
     var time = childSnapshot.val().time.trim();
     var timeConverted = moment(time, "H:mm");
     
     //Difference between first train and now
     var diffTime = moment().diff(moment(timeConverted), "minutes");
-    console.log(diffTime);
     
     //Train frequency
     var frequency = childSnapshot.val().frequency.trim();
     //Remainder of the difference between now and first train divided by frequency
 	var timeRemainder = diffTime % frequency;
-    console.log(timeRemainder);
     //Minutes until next train
     var minNextTrain = frequency - timeRemainder;
-    console.log(minNextTrain);
     //Next train time
    	var nextTrain = moment().add(minNextTrain, "minutes");
 
@@ -98,17 +88,5 @@ $(document).ready(function() {
      }, function(errorObject) {
        console.log("Errors handled: " + errorObject.code);
     });
-
-    // dataRef.ref().orderByChild("dateAdded").limitToLast(1).on("child_added", function(snapshot) {
-
-    //   // Change the HTML to reflect
-    //   $("#name-display").html(snapshot.val().name);
-    //   $("#email-display").html(snapshot.val().email);
-    //   $("#age-display").html(snapshot.val().age);
-    //   $("#comment-display").html(snapshot.val().comment);
-    // });
-
-
-
 
 });//document ready
