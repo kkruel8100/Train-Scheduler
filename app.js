@@ -61,32 +61,32 @@ $(document).ready(function() {
     // Update Train Schedule
     database.ref().on("child_added", function(childSnapshot) {
 
-    //Train first time
-    var time = childSnapshot.val().time.trim();
-    var timeConverted = moment(time, "H:mm");
+      //Train first time
+      var time = childSnapshot.val().time.trim();
+      var timeConverted = moment(time, "H:mm");
     
-    //Difference between first train and now
-    var diffTime = moment().diff(moment(timeConverted), "minutes");
+      //Difference between first train and now
+      var diffTime = moment().diff(moment(timeConverted), "minutes");
     
-    //Train frequency
-    var frequency = childSnapshot.val().frequency.trim();
-    //Remainder of the difference between now and first train divided by frequency
-	var timeRemainder = diffTime % frequency;
-    //Minutes until next train
-    var minNextTrain = frequency - timeRemainder;
-    //Next train time
-   	var nextTrain = moment().add(minNextTrain, "minutes");
+      //Train frequency
+      var frequency = childSnapshot.val().frequency.trim();
+      //Remainder of the difference between now and first train divided by frequency
+	    var timeRemainder = diffTime % frequency;
+      //Minutes until next train
+      var minNextTrain = frequency - timeRemainder;
+      //Next train time
+     	var nextTrain = moment().add(minNextTrain, "minutes");
 
-    // full list of trains
-       $("#trainList").append("<tr><td> " + childSnapshot.val().trainName +
+      // full list of trains
+      $("#trainList").append("<tr><td> " + childSnapshot.val().trainName +
          " </td><td> " + childSnapshot.val().destination +
          " </td><td> " + childSnapshot.val().frequency +
          " </td><td> " + nextTrain.format("h:mm A") +
          " </td><td> " + minNextTrain + " </td></tr>");
 
-     // Handle the errors
-     }, function(errorObject) {
+      // Handle the errors
+    }, function(errorObject) {
        console.log("Errors handled: " + errorObject.code);
-    });
+      });
 
 });//document ready
