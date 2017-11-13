@@ -11,4 +11,4 @@
 	3. First Train Time - in military time
 	4. Frequency - in minutes
 
-#### The app calculates the next train arrival relative to the current time.# Train-Scheduler
+#### The app calculates the next train arrival relative to the current time.
